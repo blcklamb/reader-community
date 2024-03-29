@@ -42,6 +42,59 @@ export type Database = {
         }
         Relationships: []
       }
+      Account: {
+        Row: {
+          access_token: string | null
+          expires_at: number | null
+          id: string
+          id_token: string | null
+          provider: string
+          providerAccountId: string
+          refresh_token: string | null
+          scope: string | null
+          session_state: string | null
+          token_type: string | null
+          type: string
+          userId: string
+        }
+        Insert: {
+          access_token?: string | null
+          expires_at?: number | null
+          id: string
+          id_token?: string | null
+          provider: string
+          providerAccountId: string
+          refresh_token?: string | null
+          scope?: string | null
+          session_state?: string | null
+          token_type?: string | null
+          type: string
+          userId: string
+        }
+        Update: {
+          access_token?: string | null
+          expires_at?: number | null
+          id?: string
+          id_token?: string | null
+          provider?: string
+          providerAccountId?: string
+          refresh_token?: string | null
+          scope?: string | null
+          session_state?: string | null
+          token_type?: string | null
+          type?: string
+          userId?: string
+        }
+        Relationships: [
+          {
+            foreignKeyName: "Account_userId_fkey"
+            columns: ["userId"]
+            isOneToOne: false
+            referencedRelation: "User"
+            referencedColumns: ["id"]
+          },
+        ]
+      }
       Book: {
         Row: {
           author: string
@@ -144,27 +197,74 @@ export type Database = {
           },
         ]
       }
-      User: {
+      Session: {
         Row: {
-          email: string
+          expires: string
           id: string
-          nickname: string
-          password: string
-          profileUrl: string | null
+          sessionToken: string
+          userId: string
         }
         Insert: {
-          email: string
+          expires: string
           id: string
-          nickname: string
-          password: string
-          profileUrl?: string | null
+          sessionToken: string
+          userId: string
         }
         Update: {
-          email?: string
+          expires?: string
           id?: string
-          nickname?: string
-          password?: string
-          profileUrl?: string | null
+          sessionToken?: string
+          userId?: string
+        }
+        Relationships: [
+          {
+            foreignKeyName: "Session_userId_fkey"
+            columns: ["userId"]
+            isOneToOne: false
+            referencedRelation: "User"
+            referencedColumns: ["id"]
+          },
+        ]
+      }
+      User: {
+        Row: {
+          email: string | null
+          emailVerified: string | null
+          id: string
+          image: string | null
+          name: string | null
+        }
+        Insert: {
+          email?: string | null
+          emailVerified?: string | null
+          id: string
+          image?: string | null
+          name?: string | null
+        }
+        Update: {
+          email?: string | null
+          emailVerified?: string | null
+          id?: string
+          image?: string | null
+          name?: string | null
+        }
+        Relationships: []
+      }
+      VerificationToken: {
+        Row: {
+          expires: string
+          identifier: string
+          token: string
+        }
+        Insert: {
+          expires: string
+          identifier: string
+          token: string
+        }
+        Update: {
+          expires?: string
+          identifier?: string
+          token?: string
         }
         Relationships: []
       }
